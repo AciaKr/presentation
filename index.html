@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section class="present" style="top: 219.5px; display: block;">
+					<h1>Application Architecture in Front-end</h1>
+					<p>
+						<small>by <a href="https://github.com/AciaKr">Nastassia Krasutskaya</a></small>
+					</p>
+				</section>
+				<section>
+                    <h2>Basic rules</h2>
+                    <ul>
+                        <li class="fragment">Easy expansion of the application functionality</li>
+                        <li class="fragment">Simple changes to existing functionality</li>
+                        <li class="fragment">Fast onboarding of new developers to the project</li>
+                        <li class="fragment">Clear and transparent code</li>
+                        <li class="fragment">Convenient and fast navigation</li>
+                    </ul>
+				</section>
+                <section>
+					<h2>Popular architecture patterns</h2>
+                    <ul>
+                        <li>Model-View-Controller (MVC)</li>
+                        <li>Clear architecture</li>
+                        <li>Uni-directional data flow (Flux)</li>
+                    </ul>
+				</section>
+                <section>
+                    <section>
+                        <h2>Model-View-Controller</h2>
+                        <h3>Structure</h3>
+                        <ul class="fragment">
+                            <li><span style="color: #42affa;">Model</span> (data and business logic of the application)</li>
+                            <li><span style="color: #42affa;">View</span> (presentation and user interface)</li>
+                            <li><span style="color: #42affa;">Controller</span> (intermediary between the model and the view)</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>MVC model</h2>
+                        <img width="500" data-src="./assets/VpOmY2qQVZ.png" alt="MVC structure">
+                    </section>
+				</section>
+
+				<section data-auto-animate>
+					<h2 data-id="code-title">Code in JavaScript (MVC)</h2>
+                    <p>Model</p>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+                    class Product {
+                        constructor(name, price) {
+                            this.name = name;
+                            this.price = price;
+                        }
+                        ...
+                    }
+					</code></pre>
+				</section>
+                <section data-auto-animate>
+                    <p>View</p>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="7-9">
+                        <script type="text/template">
+                    class Product {
+                        constructor(name, price) {
+                            this.name = name;
+                            this.price = price;
+                        }
+
+                        function displayProduct(product) {
+                            console.log(${product.name}: ${product.price});
+                        }
+                    }
+					    </script>
+                    </code></pre>
+				</section>
+                <section data-auto-animate>
+                    <p>Controller</p>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="11-13">
+                        <script type="text/template">
+                    class Product {
+                        constructor(name, price) {
+                            this.name = name;
+                            this.price = price;
+                        }
+
+                        function displayProduct(product) {
+                            console.log(${product.name}: ${product.price});
+                        }
+
+                        function addToCart(product) {
+                            // Code to add the product to the shopping cart
+                        }
+                    }
+					    </script>
+                    </code></pre>
+				</section>
+                <section data-auto-animate>
+                    <p>Object initialization</p>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="15-18">
+                        <script type="text/template">
+                    class Product {
+                        constructor(name, price) {
+                            this.name = name;
+                            this.price = price;
+                        }
+
+                        function displayProduct(product) {
+                            console.log(${product.name}: ${product.price});
+                        }
+
+                        function addToCart(product) {
+                            // Code to add the product to the shopping cart
+                        }
+                    }
+
+                    const laptop = new Product('Laptop', 1000);
+                    displayProduct(laptop);
+                    addToCart(laptop);
+
+					    </script>
+                    </code></pre>
+				</section>
+                <section>
+                    <section>
+                        <h2>Clean Architecture</h2>
+                        <h3>Structure</h3>
+                        <ul class="fragment">
+                            <li><span style="color: #42affa;">Domain Layer</span> (Entities)</li>
+                            <li><span style="color: #42affa;">Application Layer</span> (Use Cases)</li>
+                            <li><span style="color: #42affa;">Adapters Layer</span> (Adapters to external services)</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Clean Architecture model</h2>
+                        <img width="500" data-src="./assets/0_5qiQ0O4N2JIfTCGp.png" alt="Clean Architecture structure">
+                    </section>
+				</section>
+                <section data-auto-animate>
+					<h2 data-id="code-title">File structure</h2>
+                    <p>Domain Layer</p>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="2-6">
+                    src/
+                    |_domain/
+                        |_user.ts
+                        |_product.ts
+                        |_order.ts
+                        |_cart.ts
+                    |_application/
+                        |_addToCart.ts
+                        |_authenticate.ts
+                        |_orderProducts.ts
+                        |_ports.ts
+                    |_services/
+                        |_authAdapter.ts
+                        |_notificationAdapter.ts
+                        |_paymentAdapter.ts
+                        |_storageAdapter.ts
+                        |_api.ts
+                        |_store.tsx
+                    |_lib/
+                    |_ui/
+					</code></pre>
+				</section>
+                <section data-auto-animate>
+                    <h2 data-id="code-title">File structure</h2>
+                    <p>Application Layer</p>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="7-11">
+                        <script type="text/template">
+                    src/
+                    |_domain/
+                        |_user.ts
+                        |_product.ts
+                        |_order.ts
+                        |_cart.ts
+                    |_application/
+                        |_addToCart.ts
+                        |_authenticate.ts
+                        |_orderProducts.ts
+                        |_ports.ts
+                    |_services/
+                        |_authAdapter.ts
+                        |_notificationAdapter.ts
+                        |_paymentAdapter.ts
+                        |_storageAdapter.ts
+                        |_api.ts
+                        |_store.tsx
+                    |_lib/
+                    |_ui/
+					    </script>
+                    </code></pre>
+				</section>
+                <section data-auto-animate>
+                    <h2 data-id="code-title">File structure</h2>
+                    <p>Adapters Layer</p>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="12-18">
+                        <script type="text/template">
+                    src/
+                    |_domain/
+                        |_user.ts
+                        |_product.ts
+                        |_order.ts
+                        |_cart.ts
+                    |_application/
+                        |_addToCart.ts
+                        |_authenticate.ts
+                        |_orderProducts.ts
+                        |_ports.ts
+                    |_services/
+                        |_authAdapter.ts
+                        |_notificationAdapter.ts
+                        |_paymentAdapter.ts
+                        |_storageAdapter.ts
+                        |_api.ts
+                        |_store.tsx
+                    |_lib/
+                    |_ui/
+					    </script>
+                    </code></pre>
+				</section>
+                <section>
+                    <section>
+                        <h2>Uni-directional data flow (Flux)</h2>
+                        <h3>Structure</h3>
+                        <ul class="fragment">
+                            <li><span style="color: #42affa;">View</span> (Controller-Views)</li>
+                            <li><span style="color: #42affa;">Action</span></li>
+                            <li><span style="color: #42affa;">Dispatcher</span></li>
+                            <li><span style="color: #42affa;">Store</span></li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Flux model</h2>
+                        <img width="500" data-src="./assets/flux-chart.png" alt="Flux structure">
+                    </section>
+				</section>
+
+				<section data-auto-animate>
+					<h2 data-id="code-title">Code in JavaScript (Flux)</h2>
+                    <p>View (React Component)</p>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+                    class ShoppingCart extends React.Component {
+                        // Component code for rendering the shopping cart UI
+                    }
+					</code></pre>
+				</section>
+                <section data-auto-animate>
+                    <p>Action</p>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="5-12">
+                        <script type="text/template">
+                    class ShoppingCart extends React.Component {
+                        // Component code for rendering the shopping cart UI
+                    }
+
+                    const ADD_TO_CART = 'ADD_TO_CART';
+
+                    function addToCart(product) {
+                        return {
+                        type: ADD_TO_CART,
+                        payload: product,
+                        };
+                    }
+					    </script>
+                    </code></pre>
+				</section>
+                <section data-auto-animate>
+                    <p>Store</p>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="14-28">
+                        <script type="text/template">
+                    class ShoppingCart extends React.Component {
+                        // Component code for rendering the shopping cart UI
+                    }
+
+                    const ADD_TO_CART = 'ADD_TO_CART';
+
+                    function addToCart(product) {
+                        return {
+                        type: ADD_TO_CART,
+                        payload: product,
+                        };
+                    }
+
+                    const initialState = {
+                        cartItems: [],
+                    };
+
+                    function cartReducer(state = initialState, action) {
+                        switch (action.type) {
+                          case ADD_TO_CART:
+                            return {
+                              ...state,
+                              cartItems: [...state.cartItems, action.payload],
+                            };
+                          default:
+                            return state;
+                        }
+                    }
+					    </script>
+                    </code></pre>
+				</section>
+				<section>
+					<h2>Thank you!</h2>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
